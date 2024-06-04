@@ -1,3 +1,33 @@
+## Pokequadra Frontend:
+> Rentrer dans le repertoire appFront puis pokequadra
+> Puis executer yarn serve
+## Project setup
+```
+> npm install
+```
+
+### Compiles pour development
+```
+> npm run serve // yarn serve
+```
+
+## Compiles pour production
+```
+> npm run build
+```
+
+## Lints
+```
+> npm run lint // yarn lint
+```
+
+## Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Pokequadra Backend:
+> Rentrer dans le repertoire backend
+> Puis executer node index
+ 
 ## Suivi du projet:
 
 ## Frontend:
@@ -18,3 +48,4 @@ Faire un darkMode
 ## Problème rencontré :
 
 ## Incompréhension et lacune : 
+
