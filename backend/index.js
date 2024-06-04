@@ -17,15 +17,9 @@ let db = new sqlite3.Database('./db/pokeqd.db', (err) => {
 })
 
 // >> CREATE TABLLE <<
-let query = 'CREATE TABLE IF NOT EXISTS pokemon (ID NUMBER, name CHAR(255), type CHAR(255), hability CHAR(255));'
+let query = 'CREATE TABLE IF NOT EXISTS pokemon (name CHAR(255) UNIQUE, type CHAR(255), hability CHAR(255));'
 
 db.run(query)
-
-db.close((err) => {
-    if (err) {
-        console.log(err.message)
-    }
-})
 
 app.use(bodyParser.json())
 
@@ -60,7 +54,8 @@ app.get('/get/pokemon/:id', (req, res) => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {})
     .then(res => res.json())
     .then(data => {
-        res.json(data);
+        res.json(data)
+        db.run('INSERT OR IGNORE INTO pokemon (name, type, hability) VALUES(?, ?, ?)', [data.name, data.types[0].type.name , data.abilities[0].ability.name]);
     })
     .catch(err => {
         if (err) {
@@ -71,7 +66,6 @@ app.get('/get/pokemon/:id', (req, res) => {
         }
     })
 })
-
 // UDPDATE
 
 app.put('/update/pokemon/:id', (req, res) => {
@@ -101,3 +95,4 @@ app.put('/update/pokemon/:id', (req, res) => {
         console.log(err)
     })
 })
+

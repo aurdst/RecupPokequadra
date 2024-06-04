@@ -47,6 +47,16 @@ Utiliser des fichiers de traductions pour faire une version anglaise
 Faire un darkMode 
 
 ## Problème rencontré :
+Revoir la methode Update (voir pourquoi elle ne fonctionne plus)
 
-## Incompréhension et lacune : 
+## Incompréhension et lacune :
 
+## Regex:
+
+https://zestedesavoir.com/tutoriels/3651/les-expressions-regulieres-1/
+
+
+# serialize() 
+La .serialize()méthode crée une chaîne de texte dans une notation codée en URL standard. Il peut agir sur un objet jQuery qui a sélectionné des contrôles de formulaire individuels, tels que <input>, <textarea>et<select> :$( "input, textarea, select" ).serialize();
+
+Ici j'utilise un formulaire donc avec des input pour mettre à jour les données
