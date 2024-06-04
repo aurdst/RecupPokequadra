@@ -94,7 +94,7 @@ export default {
         const response = await fetch(`http://localhost:5000/get/pokemon/${this.pokemonId}`);
         const data = await response.json();
         this.pokemonData = data; // Met à jour les données du Pokémon avec les détails récupérés
-        this.picturePokemon = this.pokemonData.sprites.back_default;
+        this.picturePokemon = this.pokemonData.sprites.back_default; // On prends les fesse du pokémon
       } catch (error) {
         console.error('Erreur lors de la récupération des détails du Pokémon :', error);
       }
