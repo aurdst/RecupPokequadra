@@ -18,6 +18,7 @@
         <h2>{{ pokemonData.name }}</h2>
         <p>Type: {{ pokemonData.types[0].type.name }}</p>
         <p>Habilité: {{ pokemonData.abilities[0].ability.name }}</p>
+        <img :src="picturePokemon" alt="photo"> <!--photo ici-->
       </div>
       <div v-else>
         <p>Chargement en cours...</p>
@@ -30,16 +31,19 @@
     <form @submit.prevent="submitUpdatePokemon">
       <div>
         <label for="name">Nom:</label>
-        <input type="text" id="name" v-model="updatedPokemon.name" required>
+        <input type="text" id="name" v-model="updatedPokemon.name">
       </div>
       <div>
         <label for="type">Type:</label>
-        <input type="text" id="type" v-model="updatedPokemon.type" required>
+        <input type="text" id="type" v-model="updatedPokemon.type">
       </div>
       <div>
         <label for="hability">Habilité:</label>
-        <input type="text" id="hability" v-model="updatedPokemon.hability" required>
+        <input type="text" id="hability" v-model="updatedPokemon.hability">
       </div>
+      <br>
+      <button @click="toogleUpdate = false">Fermer</button>
+      <br>
       <button type="submit">Mettre à jour</button>
     </form>
   </div>
@@ -60,6 +64,7 @@ export default {
     return {
       pokemonId: null,
       pokemonData: null,
+      picturePokemon: null,
       updatedPokemon: {
         name: '',
         type: '',
@@ -89,6 +94,7 @@ export default {
         const response = await fetch(`http://localhost:5000/get/pokemon/${this.pokemonId}`);
         const data = await response.json();
         this.pokemonData = data; // Met à jour les données du Pokémon avec les détails récupérés
+        this.picturePokemon = this.pokemonData.sprites.back_default;
       } catch (error) {
         console.error('Erreur lors de la récupération des détails du Pokémon :', error);
       }
@@ -97,9 +103,11 @@ export default {
       this.pokemonId = this.extractPokemonId(data.url);
       this.fetchPokemonDetails();
       this.toogleDetails = true;
+      this.toogleUpdate = false;
     },
     showEdit() {
       this.toogleUpdate = true;
+      this.toogleDetails = false;
     },
     submitUpdatePokemon() {
       this.updatePokemon(this.pokemonId);
