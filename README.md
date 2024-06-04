@@ -39,6 +39,7 @@ Gérer l'update en utilisant le store pour garder les modifications
 Gérer la pagnination des élments afin d'avoir une vue d'ensemble sur tout les pokémon
 Rendre utile les méthodes du back en utilisant réellement la base de données:
     - Inserer les pokémons dans la BDD une fois récupèrer
+    - Renvoyer des erreurs Backend pour le Frontend
 
 ## Optionnel:
 Ajouter un carrousel sur les photo afin d'y voir un maximum d'élement
