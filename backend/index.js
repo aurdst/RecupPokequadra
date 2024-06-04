@@ -42,10 +42,15 @@ app.get('/get/all/pokemon', (req, res) => {
     fetch('https://pokeapi.co/api/v2/pokemon', {})
         .then(res => res.json())
         .then(data => {
-            for (const elem in data) {
-                console.log(elem)
-            }
             res.json(data.results)
+        })
+        .catch(err => {
+            if (err) {
+                console.error(err.message);
+                res.status(404).json({ message: 'Not found: Failed to get all Pokemon' });
+            } else {
+                res.json({ message: 'Pokemon get successfully' });
+            }
         })
 })
 
@@ -58,7 +63,12 @@ app.get('/get/pokemon/:id', (req, res) => {
         res.json(data);
     })
     .catch(err => {
-        console.log(err)
+        if (err) {
+            console.error(err.message);
+            res.status(404).json({ message: 'Not found: Failed to get Pokemon, check Id: `${id}` if exists' });
+        } else {
+            res.json({ message: 'Pokemon get successfully' });
+        }
     })
 })
 
