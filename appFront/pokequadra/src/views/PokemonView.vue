@@ -176,7 +176,18 @@ export default {
   border-color: #007BFF;
 }
 
-.pokemoneEdit button[type="submit"] {
+.pokemoneEdit button{
+  padding: 10px 15px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pokemonDetails button{
   padding: 10px 15px;
   background-color: #007BFF;
   color: #fff;
