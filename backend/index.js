@@ -78,7 +78,7 @@ app.put('/update/pokemon/:id', (req, res) => {
         db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name, data.abilities[0].ability.name]);
         // utilisation de serialize pour mettre a jour les données
         db.serialize(() => {
-            const query = `UPDATE pokemon SET name = ?, type = ?, hability = ? WHERE ID = ?`
+            const query = `UPDATE pokemon SET name = ?, type = ?, hability = ? WHERE id = ?`
             // Une fois la query preparer, on passe les params de mise a jour
             db.run(query, [data.name, data.type, data.hability, id], (err) => {
                 if (err) {
