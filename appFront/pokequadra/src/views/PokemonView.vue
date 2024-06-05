@@ -7,7 +7,7 @@
         v-for="pokemon in pokemonList"
         :key="pokemon.name"
       >
-        <PokemonCard :pokemon="pokemon" @showEdit="showEdit()" @detailShow="showDetail(pokemon)" />
+        <PokemonCard :pokemon="pokemon" @showEdit="showEdit(pokemon)" @detailShow="showDetail(pokemon)" />
       </div>
     </div>
     <!-- Details popup -->
@@ -28,6 +28,7 @@
 
   <!-- Formulaire de mise à jour -->
   <div class="pokemoneEdit" v-if="toogleUpdate">
+    <img :src="picturePokemon" alt="photo"> <!--photo ici-->
     <form @submit.prevent="submitUpdatePokemon">
       <div>
         <label for="name">Nom:</label>
@@ -94,7 +95,7 @@ export default {
         const response = await fetch(`http://localhost:5000/get/pokemon/${this.pokemonId}`);
         const data = await response.json();
         this.pokemonData = data; // Met à jour les données du Pokémon avec les détails récupérés
-        this.picturePokemon = this.pokemonData.sprites.back_default; // On prends les fesse du pokémon
+        this.picturePokemon = this.pokemonData.sprites.back_default; // On prends les fesses du pokémon
       } catch (error) {
         console.error('Erreur lors de la récupération des détails du Pokémon :', error);
       }
@@ -105,7 +106,9 @@ export default {
       this.toogleDetails = true;
       this.toogleUpdate = false;
     },
-    showEdit() {
+    showEdit(data) {
+      this.pokemonId = this.extractPokemonId(data.url);
+      this.fetchPokemonDetails();
       this.toogleUpdate = true;
       this.toogleDetails = false;
     },

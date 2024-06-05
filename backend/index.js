@@ -55,7 +55,7 @@ app.get('/get/pokemon/:id', (req, res) => {
     .then(res => res.json())
     .then(data => {
         res.json(data)
-        db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name , data.abilities[0].ability.name]);
+        db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name, data.abilities[0].ability.name]);
     })
     .catch(err => {
         if (err) {
