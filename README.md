@@ -54,6 +54,9 @@ Source d'aide : https://medium.com/@6unpnp/node-js-html-form-and-database-2b7272
 
 ## Incompréhension et lacune :
 
+> Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+> cORRECTIF / https://dev.to/collegewap/fix-cannot-set-headers-after-they-are-sent-to-the-client-19gk
+
 ## Regex:
 
 https://zestedesavoir.com/tutoriels/3651/les-expressions-regulieres-1/
