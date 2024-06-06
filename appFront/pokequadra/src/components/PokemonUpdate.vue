@@ -1,5 +1,6 @@
 <template>
   <div class="pokemon-card" v-if="isOpen">
+    <button @click="!isOpen">Fermer</button>
     <h1>{{ pokemon.name }}</h1>
     <p>{{ pokemon.type }}</p>
     <p>{{ pokemon.hability }}</p>

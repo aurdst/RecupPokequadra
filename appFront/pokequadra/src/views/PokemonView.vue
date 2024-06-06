@@ -7,28 +7,27 @@
         v-for="pokemon in pokemonList"
         :key="pokemon.name"
       >
-        <PokemonCard :pokemon="pokemon" @showEdit="showEdit()" @detailShow="showDetail(pokemon)" />
+        <PokemonCard :pokemon="pokemon" @showEdit="showEdit(pokemon)" @detailShow="showDetail(pokemon)" />
       </div>
     </div>
 
-    <div
-      class="pokemonDetails"
-    >
-      <PokemonDetail :pokemon="selectedPokemon" v-if="toogleDetails" />
-    </div>
+    <PokemonDetail :pokemon="selectedPokemon" :isOpen="true" v-if="toogleDetails" class="pokemonDetails"/>
+    <!-- <EditPokemonForm :pokemon="selectedPokemon"/> -->
   </div>
 </template>
 
 <script>
 import PokemonCard from '@/components/PokemonCard.vue'; // Importer le composant PokemonCard
 import PokemonDetail from '@/components/PokemonDetails.vue'; // Importer le composant PokemonCard
+// import EditPokemonForm from '@/components/PokemonUpdate.vue';
 import { mapActions, mapState } from 'vuex'; //import du store
 
 export default {
   name: 'PokemonList',
   components: {
     PokemonCard,
-    PokemonDetail
+    PokemonDetail,
+    // EditPokemonForm
   },
   data() {
     return {
@@ -46,6 +45,7 @@ export default {
     };
   },
   async mounted() {
+    await this.insertPokemon();
     this.fetchPokemonList(); // Appeler la méthode pour récupérer les Pokémon au mounted
   },
   computed: {
@@ -54,16 +54,16 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['updatePokemon', 'fetchPokemonList']),
+    ...mapActions(['updatePokemon', 'fetchPokemonList', 'insertPokemon']),
     showDetail(pokemon) {
       this.toogleDetails = true;
       this.toogleUpdate = false;
       this.selectedPokemon = pokemon
-      console.log('c ouvert fdp')
     },
-    showEdit() {
+    showEdit(pokemon) {
       this.toogleUpdate = true;
       this.toogleDetails = false;
+      this.selectedPokemon = pokemon
     },
     submitUpdatePokemon() {
       this.updatePokemon(this.pokemonId);

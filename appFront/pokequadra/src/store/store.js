@@ -25,6 +25,14 @@ export default createStore({
         console.error('Error fetching Pokémon:', error);
       }
     },
+    async insertPokemon() {
+      try {
+        await axios.get('http://localhost:5000/insert/all/pokemon');
+        console.log('Insert success');
+      } catch (error) {
+        console.error('Error inserting Pokémon:', error);
+      }
+    },
     async updatePokemon({ commit }, id) {
       try {
         const response = await axios.put(`http://localhost:5000/update/pokemon/${id}`);

@@ -37,7 +37,7 @@ function extractPokemonId(url) {
 }
 
 // GET ALL
-app.get('/get/all/pokemon', async (req, res) => {
+app.get('/insert/all/pokemon', async (req, res) => {
     try {
         const response = await fetch('https://pokeapi.co/api/v2/pokemon?offset=100&limit=100')
         const data = await response.json()
@@ -46,22 +46,27 @@ app.get('/get/all/pokemon', async (req, res) => {
             if (id) {
                 const getPokemonWithId = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
                 const pokemonData = await getPokemonWithId.json()
-                console.log(pokemonData)
-                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability, picture) VALUES(?, ?, ?, ?, ?)', [id, pokemonData.name, pokemonData.types[0].type.name, pokemonData.abilities[0].ability.name], pokemonData.sprites[0].back_default);
+                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability, picture) VALUES(?, ?, ?, ?, ?)', [id, pokemonData.name, pokemonData.types[0].type.name, pokemonData.abilities[0].ability.name, pokemonData.sprites.back_default]);
             }
         }
-        db.all('SELECT * FROM pokemon', (err, rows) => {
-            if (err) {
-                console.log('err', err)
-            }
-            res.json(rows)
-        })
+        res.json({ message: 'Pokemon inserted successfully' });
     } catch (err) {
         console.log(err)
         if (err) {
             res.status(500).json({ message : 'Erreur de chargement'})
         }
     }
+})
+
+app.get('/get/all/pokemon', async (req, res) => {
+    db.all('SELECT * FROM pokemon', (err, rows) => {
+        if (err) {
+            console.log('err', err);
+            res.status(500).json({ message: 'Erreur de chargement' });
+            return;
+        }
+        res.json(rows);
+    });
 })
 
 
