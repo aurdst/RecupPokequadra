@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'; // Importez les fonctions nécessaires depuis vue-router
 import PokemonView from '@/views/PokemonView.vue'; // Importez le composant de la liste des Pokémon
-import PokemonDetails from '@/views/PokemonDetails.vue'; // Importez le composant des détails d'un Pokémon
+import PokemonDetails from '@/components/PokemonDetails.vue'; // Importez le composant des détails d'un Pokémon
 
 const routes = [
   {

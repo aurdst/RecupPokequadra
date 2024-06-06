@@ -1,19 +1,15 @@
 <template>
   <div class="pokemon-card">
     <h3>{{ pokemon.name }}</h3>
-    <button @click="$emit('detailShow')">
-      <font-awesome-icon icon="eye" />
-    </button>
-    <button @click="$emit('showEdit')">
-      <font-awesome-icon icon="edit" />
-    </button>
+    <h2>{{ pokemon.type }}</h2>
+    <h2>{{ pokemon.hability }}</h2>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'PokemonCard',
+  name: 'PokemonDetail',
   props: {
     pokemon: {
       type: Object,
@@ -25,6 +21,9 @@ export default {
 
 <style scoped>
 .pokemon-card {
+  position: fixed; /* Fixe la popup en haut de l'écran */
+  top: 0;
+  left: 50%; /* Centre horizontalement */
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;

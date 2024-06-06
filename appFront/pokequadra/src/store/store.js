@@ -20,8 +20,7 @@ export default createStore({
     async fetchPokemonList({ commit }) {
       try {
         const response = await axios.get('http://localhost:5000/get/all/pokemon');
-        console.log(response.data.results)
-        commit('setPokemonList', response.data.results);
+        commit('setPokemonList', response.data);
       } catch (error) {
         console.error('Error fetching Pokémon:', error);
       }
