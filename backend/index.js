@@ -29,28 +29,35 @@ app.listen(port, () => {
 })
 
 // > Route API <<< 
+// Extraire l'id 
+function extractPokemonId(url) {
+    const regex = /\/pokemon\/(\d+)\//;
+    const match = url.match(regex);
+    return match && match[1] ? match[1] : null;
+}
 
 // GET ALL
-app.get('/get/all/pokemon', (req, res) => {
-    // Recuperation des datas
-    fetch('https://pokeapi.co/api/v2/pokemon', {})
-        .then(res => res.json())
-        console.log(data)
-        .then(data => {
-            for (const d in data) {
-                console.log('name poke', d.name)
-                    db.run('INSERT OR IGNORE INTO pokemon (name, type, hability) VALUES(?, ?, ?, ?)', [d.name, d.types[0].type.name, d.abilities[0].ability.name]);
+app.get('/get/all/pokemon', async (req, res) => {
+    try {
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?offset=100&limit=100')
+        const data = await response.json()
+        console.log(data.results)
+
+        for (const pokemon of data.results) {
+            const id = extractPokemonId(pokemon.url);
+            if (id) {
+                const getPokemonWithId = await fetch('https://pokeapi.co/api/v2/pokemon/${id}')
+                const pokemonData = await getPokemonWithId.json()
+
+                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name, data.abilities[0].ability.name]);
             }
-        })
-        .catch(err => {
-            if (err) {
-                console.error(err.message);
-                res.status(404).json({ message: 'Not found: Failed to get all Pokemon' });
-            } else {
-                res.json({ message: 'Pokemon get successfully' });
-            }
-        })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message : 'Erreur de chargement'})
+    }
 })
+
 
 // GET BY ID
 app.get('/get/pokemon/:id', (req, res) => {
