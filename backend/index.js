@@ -49,7 +49,7 @@ app.get('/get/all/pokemon', async (req, res) => {
                 const getPokemonWithId = await fetch('https://pokeapi.co/api/v2/pokemon/${id}')
                 const pokemonData = await getPokemonWithId.json()
 
-                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name, data.abilities[0].ability.name]);
+                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, pokemonData.name, pokemonData.types[0].type.name, pokemonData.abilities[0].ability.name]);
             }
         }
     } catch (err) {
