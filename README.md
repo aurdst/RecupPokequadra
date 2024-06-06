@@ -51,11 +51,13 @@ Revoir la methode Update (voir pourquoi elle ne fonctionne plus)
 Source d'aide : https://medium.com/@6unpnp/node-js-html-form-and-database-2b72728a1dc4
 
 > Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+> SyntaxError: Unexpected token N in JSON at position 0
+
 
 ## Incompréhension et lacune :
 
 > Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-> cORRECTIF / https://dev.to/collegewap/fix-cannot-set-headers-after-they-are-sent-to-the-client-19gk
+> Correctif:  / https://dev.to/collegewap/fix-cannot-set-headers-after-they-are-sent-to-the-client-19gk
 
 ## Regex:
 

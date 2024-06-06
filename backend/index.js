@@ -41,14 +41,13 @@ app.get('/get/all/pokemon', async (req, res) => {
     try {
         const response = await fetch('https://pokeapi.co/api/v2/pokemon?offset=100&limit=100')
         const data = await response.json()
-        console.log(data.results)
         for (const pokemon of data.results) {
             const id = extractPokemonId(pokemon.url);
             if (id) {
                 const getPokemonWithId = await fetch('https://pokeapi.co/api/v2/pokemon/${id}')
-                const pokemonData = await getPokemonWithId.json()
-                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, pokemonData.name, pokemonData.types[0].type.name, pokemonData.abilities[0].ability.name]);
-                // res.json(200).json({message : 'Pokemon insert'})
+                const pokemonData = await getPokemonWithId.response.json()
+                const data = pokemonData.results
+                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name, data.abilities[0].ability.name]);
             }
         }
     } catch (err) {
