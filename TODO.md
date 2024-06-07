@@ -5,20 +5,32 @@
 ## Suivi du projet:
 
 ## Frontend:
-Améliorer la structure en créants des composants pour les popUp de Details et de Updates
-Améliorer le CSS pour avoir un beau rendu
-Gérer l'update en utilisant le store pour garder les modifications
+
+> FAIT
+- Faire le component PopUpDetails 
+> EN COURS
+- Faire le component PopUpUpdate 
+> A FAIRE
+- Améliorer le CSS pour avoir un beau rendu
+- Faire des bouton de fermuture sur les PopUps
+- Gérer l'update en utilisant le store pour garder les modifications
 
 ## Backend:
-Gérer la pagnination des élments afin d'avoir une vue d'ensemble sur tout les pokémon
-Rendre utile les méthodes du back en utilisant réellement la base de données:
+> FAIT
+
+> EN COURS
+- Rendre utile les méthodes du back en utilisant réellement la base de données:
     - Inserer les pokémons dans la BDD une fois récupèrer
     - Renvoyer des erreurs Backend pour le Frontend
+> A FAIRE
+- Gérer la pagnination des élments afin d'avoir une vue d'ensemble sur tout les pokémon
+
 
 ## Optionnel:
-Ajouter un carrousel sur les photo afin d'y voir un maximum d'élement
-Utiliser des fichiers de traductions pour faire une version anglaise
-Faire un darkMode 
+> A FAIRE
+- Ajouter un carrousel sur les photo afin d'y voir un maximum d'élement
+- Utiliser des fichiers de traductions pour faire une version anglaise
+- Faire un darkMode 
 
 ## Problème rencontré :
 Revoir la methode Update (voir pourquoi elle ne fonctionne plus)
@@ -26,7 +38,7 @@ Source d'aide : https://medium.com/@6unpnp/node-js-html-form-and-database-2b7272
 
 > Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 > SyntaxError: Unexpected token N in JSON at position 0
-> Coorectif : 
+> Correctif : 
 
 
 ## Incompréhension et lacune :
@@ -41,3 +53,5 @@ https://zestedesavoir.com/tutoriels/3651/les-expressions-regulieres-1/
 
 # serialize() 
 La .serialize()méthode crée une chaîne de texte dans une notation codée en URL standard. Il peut agir sur un objet jQuery qui a sélectionné des contrôles de formulaire individuels, tels que <input>, <textarea>et<select> :$( "input, textarea, select" ).serialize();
+
+> VERSION STABLE dev06-06-24
