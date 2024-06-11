@@ -20,10 +20,25 @@ export default createStore({
     async fetchPokemonList({ commit }) {
       try {
         const response = await axios.get('http://localhost:5000/get/all/pokemon');
-        console.log(response.data.results)
-        commit('setPokemonList', response.data.results);
+        commit('setPokemonList', response.data);
       } catch (error) {
         console.error('Error fetching Pokémon:', error);
+      }
+    },
+    async nextPage({ commit }) {
+      try {
+        const response = await axios.get('http://localhost:5000/nextPage');
+        commit('setPokemonList', response.data);
+      } catch (error) {
+        console.error('Error fetching Pokémon:', error);
+      }
+    },
+    async insertPokemon() {
+      try {
+        await axios.get('http://localhost:5000/insert/all/pokemon');
+        console.log('Insert success');
+      } catch (error) {
+        console.error('Error inserting Pokémon:', error);
       }
     },
     async updatePokemon({ commit }, id) {

@@ -17,7 +17,7 @@ let db = new sqlite3.Database('./db/pokeqd.db', (err) => {
 })
 
 // >> CREATE TABLLE <<
-let query = 'CREATE TABLE IF NOT EXISTS pokemon (id PRIMARY KEY, name CHAR(255) UNIQUE, type CHAR(255), hability CHAR(255));'
+let query = 'CREATE TABLE IF NOT EXISTS pokemon (id PRIMARY KEY, name CHAR(255) UNIQUE, type CHAR(255), hability CHAR(255), picture CHAR(255));'
 
 db.run(query)
 
@@ -37,26 +37,55 @@ function extractPokemonId(url) {
 }
 
 // GET ALL
-app.get('/get/all/pokemon', async (req, res) => {
+app.get('/insert/all/pokemon', async (req, res) => {
     try {
         const response = await fetch('https://pokeapi.co/api/v2/pokemon?offset=100&limit=100')
         const data = await response.json()
-        console.log(data.results)
         for (const pokemon of data.results) {
             const id = extractPokemonId(pokemon.url);
             if (id) {
-                const getPokemonWithId = await fetch('https://pokeapi.co/api/v2/pokemon/${id}')
+                const getPokemonWithId = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
                 const pokemonData = await getPokemonWithId.json()
-                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, pokemonData.name, pokemonData.types[0].type.name, pokemonData.abilities[0].ability.name]);
-                // res.json(200).json({message : 'Pokemon insert'})
+                db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability, picture) VALUES(?, ?, ?, ?, ?)', [id, pokemonData.name, pokemonData.types[0].type.name, pokemonData.abilities[0].ability.name, pokemonData.sprites.back_default]);
             }
         }
+        res.json({ message: 'Pokemon inserted successfully' });
     } catch (err) {
         console.log(err)
         if (err) {
             res.status(500).json({ message : 'Erreur de chargement'})
         }
     }
+})
+
+app.get('/get/all/pokemon', async (req, res) => {
+
+    db.all('SELECT * FROM pokemon', (err, rows) => {
+        if (err) {
+            console.log('err', err);
+            res.status(500).json({ message: 'Erreur de chargement' });
+            return;
+        }
+        res.json(rows);
+    });
+})
+
+app.get('/nextPage', async(req, res) => {
+    // Recupere le nb de page souhaité
+    // const pages = req.query.
+    // Recupere le nombre total de datas
+    // Utilise ces variables dans les paramètres de ta requete, et a l'appel de ta requete front passe 
+    // les params souhaité en utilisant des const de conf si possible
+    // const page = 5
+    const offset = 20
+    db.all(`SELECT * FROM pokemon LIMIT ? OFFSET ?`, [20, offset], (err, rows) => {
+        if (err) {
+            console.log('err', err);
+            res.status(500).json({ message: 'Erreur de chargement' });
+            return;
+        }
+        res.json(rows);
+    })
 })
 
 
@@ -67,7 +96,6 @@ app.get('/get/pokemon/:id', (req, res) => {
     .then(res => res.json())
     .then(data => {
         res.json(data)
-        db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name, data.abilities[0].ability.name]);
     })
     .catch(err => {
         if (err) {
@@ -86,8 +114,6 @@ app.put('/update/pokemon/:id', (req, res) => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {})
     .then(res => res.json())
     .then(data => {
-        // update here
-        db.run('INSERT OR IGNORE INTO pokemon (id, name, type, hability) VALUES(?, ?, ?, ?)', [id, data.name, data.types[0].type.name, data.abilities[0].ability.name]);
         // utilisation de serialize pour mettre a jour les données
         db.serialize(() => {
             const query = `UPDATE pokemon SET name = ?, type = ?, hability = ? WHERE id = ?`

@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Liste des Pokémon</h1>
+    <button @click="next()">NEXT</button>
     <div class="pokemon-list">
       <!-- Boucle sur tous les Pokémon retournés dans le fetchPokemon -->
       <div
@@ -10,61 +11,30 @@
         <PokemonCard :pokemon="pokemon" @showEdit="showEdit(pokemon)" @detailShow="showDetail(pokemon)" />
       </div>
     </div>
-    <!-- Details popup -->
-    <div class="pokemonDetails" v-if="toogleDetails">
-      <h1>Détails du Pokémon #{{ pokemonId }}</h1>
-      <button @click="toogleDetails = false">X</button>
-      <div v-if="pokemonData">
-        <h2>{{ pokemonData.name }}</h2>
-        <p>Type: {{ pokemonData.types[0].type.name }}</p>
-        <p>Habilité: {{ pokemonData.abilities[0].ability.name }}</p>
-        <img :src="picturePokemon" alt="photo"> <!--photo ici-->
-      </div>
-      <div v-else>
-        <p>Chargement en cours...</p>
-      </div>
-    </div>
-    <!--  -->
 
-  <!-- Formulaire de mise à jour -->
-  <div class="pokemoneEdit" v-if="toogleUpdate">
-    <img :src="picturePokemon" alt="photo"> <!--photo ici-->
-    <form @submit.prevent="submitUpdatePokemon">
-      <div>
-        <label for="name">Nom:</label>
-        <input type="text" id="name" v-model="updatedPokemon.name">
-      </div>
-      <div>
-        <label for="type">Type:</label>
-        <input type="text" id="type" v-model="updatedPokemon.type">
-      </div>
-      <div>
-        <label for="hability">Habilité:</label>
-        <input type="text" id="hability" v-model="updatedPokemon.hability">
-      </div>
-      <br>
-      <button @click="toogleUpdate = false">Fermer</button>
-      <br>
-      <button type="submit">Mettre à jour</button>
-    </form>
-  </div>
-  <!--  -->
+    <PokemonDetail :pokemon="selectedPokemon" :isOpen="true" v-if="toogleDetails" class="pokemonDetails"/>
+    <!-- <EditPokemonForm :pokemon="selectedPokemon"/> -->
   </div>
 </template>
 
 <script>
 import PokemonCard from '@/components/PokemonCard.vue'; // Importer le composant PokemonCard
+import PokemonDetail from '@/components/PokemonDetails.vue'; // Importer le composant PokemonCard
+// import EditPokemonForm from '@/components/PokemonUpdate.vue';
 import { mapActions, mapState } from 'vuex'; //import du store
 
 export default {
   name: 'PokemonList',
   components: {
-    PokemonCard
+    PokemonCard,
+    PokemonDetail,
+    // EditPokemonForm
   },
   data() {
     return {
       pokemonId: null,
       pokemonData: null,
+      selectedPokemon: null,
       picturePokemon: null,
       updatedPokemon: {
         name: '',
@@ -76,7 +46,10 @@ export default {
     };
   },
   async mounted() {
-    this.fetchPokemonList(); // Appeler la méthode pour récupérer les Pokémon au mounted
+    // await this.insertPokemon();
+    await this.nextPage()
+    // this.fetchPokemonList(); 
+    // Appeler la méthode pour récupérer les Pokémon au mounted
   },
   computed: {
     ...mapState({
@@ -84,36 +57,22 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['updatePokemon', 'fetchPokemonList']),
-    extractPokemonId(url) {
-      const regex = /\/pokemon\/(\d+)\//;
-      const match = url.match(regex);
-      return match && match[1] ? match[1] : null;
-    },
-    async fetchPokemonDetails() {
-      try {
-        const response = await fetch(`http://localhost:5000/get/pokemon/${this.pokemonId}`);
-        const data = await response.json();
-        this.pokemonData = data; // Met à jour les données du Pokémon avec les détails récupérés
-        this.picturePokemon = this.pokemonData.sprites.back_default; // On prends les fesses du pokémon
-      } catch (error) {
-        console.error('Erreur lors de la récupération des détails du Pokémon :', error);
-      }
-    },
-    showDetail(data) {
-      this.pokemonId = this.extractPokemonId(data.url);
-      this.fetchPokemonDetails();
+    ...mapActions(['updatePokemon', 'fetchPokemonList', 'insertPokemon', 'nextPage']),
+    showDetail(pokemon) {
       this.toogleDetails = true;
       this.toogleUpdate = false;
+      this.selectedPokemon = pokemon
     },
-    showEdit(data) {
-      this.pokemonId = this.extractPokemonId(data.url);
-      this.fetchPokemonDetails();
+    showEdit(pokemon) {
       this.toogleUpdate = true;
       this.toogleDetails = false;
+      this.selectedPokemon = pokemon
     },
     submitUpdatePokemon() {
       this.updatePokemon(this.pokemonId);
+    },
+    next() {
+      this.nextPage()
     }
   }
 };

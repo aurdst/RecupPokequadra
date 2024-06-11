@@ -1,7 +1,6 @@
 <template>
   <div class="pokemon-card">
     <h3>{{ pokemon.name }}</h3>
-    <p>URL: {{ pokemon.url }}</p>
     <button @click="$emit('detailShow')">
       <font-awesome-icon icon="eye" />
     </button>
@@ -15,11 +14,6 @@
 
 export default {
   name: 'PokemonCard',
-  data () {
-    return {
-      pokemonId: null,
-    }
-  },
   props: {
     pokemon: {
       type: Object,
