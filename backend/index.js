@@ -59,6 +59,7 @@ app.get('/insert/all/pokemon', async (req, res) => {
 })
 
 app.get('/get/all/pokemon', async (req, res) => {
+
     db.all('SELECT * FROM pokemon', (err, rows) => {
         if (err) {
             console.log('err', err);
@@ -67,6 +68,24 @@ app.get('/get/all/pokemon', async (req, res) => {
         }
         res.json(rows);
     });
+})
+
+app.get('/nextPage', async(req, res) => {
+    // Recupere le nb de page souhaité
+    // const pages = req.query.
+    // Recupere le nombre total de datas
+    // Utilise ces variables dans les paramètres de ta requete, et a l'appel de ta requete front passe 
+    // les params souhaité en utilisant des const de conf si possible
+    // const page = 5
+    const offset = 20
+    db.all(`SELECT * FROM pokemon LIMIT ? OFFSET ?`, [20, offset], (err, rows) => {
+        if (err) {
+            console.log('err', err);
+            res.status(500).json({ message: 'Erreur de chargement' });
+            return;
+        }
+        res.json(rows);
+    })
 })
 
 

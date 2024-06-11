@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Liste des Pokémon</h1>
+    <button @click="next()">NEXT</button>
     <div class="pokemon-list">
       <!-- Boucle sur tous les Pokémon retournés dans le fetchPokemon -->
       <div
@@ -45,8 +46,10 @@ export default {
     };
   },
   async mounted() {
-    await this.insertPokemon();
-    this.fetchPokemonList(); // Appeler la méthode pour récupérer les Pokémon au mounted
+    // await this.insertPokemon();
+    await this.nextPage()
+    // this.fetchPokemonList(); 
+    // Appeler la méthode pour récupérer les Pokémon au mounted
   },
   computed: {
     ...mapState({
@@ -54,7 +57,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['updatePokemon', 'fetchPokemonList', 'insertPokemon']),
+    ...mapActions(['updatePokemon', 'fetchPokemonList', 'insertPokemon', 'nextPage']),
     showDetail(pokemon) {
       this.toogleDetails = true;
       this.toogleUpdate = false;
@@ -67,6 +70,9 @@ export default {
     },
     submitUpdatePokemon() {
       this.updatePokemon(this.pokemonId);
+    },
+    next() {
+      this.nextPage()
     }
   }
 };

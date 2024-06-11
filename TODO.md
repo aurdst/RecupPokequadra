@@ -11,6 +11,7 @@
 > EN COURS
 - Faire le component PopUpUpdate 
 > A FAIRE
+- Pagnination des pokemon par tranches de 20 - 50 - 100
 - Améliorer le CSS pour avoir un beau rendu
 - Faire des bouton de fermuture sur les PopUps
 - Gérer l'update en utilisant le store pour garder les modifications
@@ -24,6 +25,7 @@
     - Renvoyer des erreurs Backend pour le Frontend
 > A FAIRE
 - Gérer la pagnination des élments afin d'avoir une vue d'ensemble sur tout les pokémon
+- Erreur babel
 
 
 ## Optionnel:
@@ -46,6 +48,9 @@ Source d'aide : https://medium.com/@6unpnp/node-js-html-form-and-database-2b7272
 > Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 > Correctif:  / https://dev.to/collegewap/fix-cannot-set-headers-after-they-are-sent-to-the-client-19gk
 
+Créer une pagination : 
+> https://www.geeksforgeeks.org/how-to-paginate-results-in-sqlite/
+> https://docs.data.world/documentation/sql/concepts/basic/OFFSET.html#:~:text=OFFSET%20dictates%20the%20number%20of,up%20and%20page%20down%20mechanisms.
 ## Regex:
 
 https://zestedesavoir.com/tutoriels/3651/les-expressions-regulieres-1/
@@ -54,4 +59,3 @@ https://zestedesavoir.com/tutoriels/3651/les-expressions-regulieres-1/
 # serialize() 
 La .serialize()méthode crée une chaîne de texte dans une notation codée en URL standard. Il peut agir sur un objet jQuery qui a sélectionné des contrôles de formulaire individuels, tels que <input>, <textarea>et<select> :$( "input, textarea, select" ).serialize();
 
-> VERSION STABLE dev06-06-24
