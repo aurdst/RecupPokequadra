@@ -40,4 +40,4 @@
 > Le serveur sera disponible sur le port 5000
 ```
 
-> VERSION STABLE dev06-06-24
+> VERSION STABLE git checkout main
