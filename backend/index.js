@@ -111,25 +111,18 @@ app.get('/get/pokemon/:id', (req, res) => {
 app.put('/update/pokemon/:id', (req, res) => {
     const { id } = req.params; // Recup id via parama
 
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {})
-    .then(res => res.json())
-    .then(data => {
         // utilisation de serialize pour mettre a jour les données
-        db.serialize(() => {
-            const query = `UPDATE pokemon SET name = ?, type = ?, hability = ? WHERE id = ?`
-            // Une fois la query preparer, on passe les params de mise a jour
-            db.run(query, [data.name, data.type, data.hability, id], (err) => {
-                if (err) {
-                    console.error(err.message);
-                    res.status(500).json({ message: 'Failed to update Pokemon' });
-                } else {
-                    res.json({ message: 'Pokemon updated successfully' });
-                }
-            })
+    db.serialize(() => {
+        const query = `UPDATE pokemon SET name = ?, type = ?, hability = ? WHERE id = ?`
+        // Une fois la query preparer, on passe les params de mise a jour
+        db.run(query, [data.name, data.type, data.hability, id], (err) => {
+            if (err) {
+                console.error(err.message);
+                res.status(500).json({ message: 'Failed to update Pokemon' });
+            } else {
+                res.json({ message: 'Pokemon updated successfully' });
+            }
         })
-    })
-    .catch(err => {
-        console.log(err)
     })
 })
 
