@@ -13,14 +13,14 @@
     </div>
 
     <PokemonDetail :pokemon="selectedPokemon" :isOpen="true" v-if="toogleDetails" class="pokemonDetails"/>
-    <!-- <EditPokemonForm :pokemon="selectedPokemon"/> -->
+    <EditPokemonForm :pokemon="selectedPokemon" :isOpen="true" v-if="toogleUpdate"/>
   </div>
 </template>
 
 <script>
 import PokemonCard from '@/components/PokemonCard.vue'; // Importer le composant PokemonCard
 import PokemonDetail from '@/components/PokemonDetails.vue'; // Importer le composant PokemonCard
-// import EditPokemonForm from '@/components/PokemonUpdate.vue';
+import EditPokemonForm from '@/components/PokemonUpdate.vue';
 import { mapActions, mapState } from 'vuex'; //import du store
 
 export default {
@@ -28,7 +28,7 @@ export default {
   components: {
     PokemonCard,
     PokemonDetail,
-    // EditPokemonForm
+    EditPokemonForm
   },
   data() {
     return {
@@ -48,8 +48,8 @@ export default {
   async mounted() {
     // await this.insertPokemon();
     await this.nextPage()
-    // this.fetchPokemonList(); 
     // Appeler la méthode pour récupérer les Pokémon au mounted
+    await this.fetchPokemonList();
   },
   computed: {
     ...mapState({
@@ -67,9 +67,6 @@ export default {
       this.toogleUpdate = true;
       this.toogleDetails = false;
       this.selectedPokemon = pokemon
-    },
-    submitUpdatePokemon() {
-      this.updatePokemon(this.pokemonId);
     },
     next() {
       this.nextPage()
