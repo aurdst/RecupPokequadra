@@ -47,13 +47,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updatePokemon'])
-  },
+  ...mapActions(['updatePokemon']),
   close() {
     this.$emit('close');
   },
   submitUpdatePokemon() {
+    console.log(this.pokemonUpdate)
     this.updatePokemon(this.pokemon.id, this.pokemonUpdate);
+  },
   },
 };
 </script>

@@ -43,8 +43,9 @@ export default createStore({
     },
     async updatePokemon({ commit }, id) {
       try {
-        const response = await axios.put(`http://localhost:5000/update/pokemon/${id}`);
-        commit('updatePokemon', response.data);
+        const response = await axios.put(`http://localhost:5000/update/pokemon/${id}`, updatePokemeon);
+        console.log(response)
+        commit('updatePokemon', {id, updatePokemeon});
       } catch (error) {
         console.error('Error updating Pokémon:', error);
       }
