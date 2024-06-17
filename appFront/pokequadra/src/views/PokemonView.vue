@@ -13,7 +13,12 @@
     </div>
 
     <PokemonDetail :pokemon="selectedPokemon" :isOpen="true" v-if="toogleDetails" class="pokemonDetails"/>
-    <EditPokemonForm :pokemon="selectedPokemon" :isOpen="true" v-if="toogleUpdate"/>
+    <EditPokemonForm
+    :pokemon="selectedPokemon"
+    :isOpen="true"
+    v-if="toogleUpdate"
+    @update="handleUpdate"
+    @close="closeEdit"/>
   </div>
 </template>
 
@@ -54,7 +59,7 @@ export default {
   computed: {
     ...mapState({
       pokemonList: state => state.pokemonList
-    })
+    }) 
   },
   methods: {
     ...mapActions(['updatePokemon', 'fetchPokemonList', 'insertPokemon', 'nextPage']),
@@ -70,6 +75,15 @@ export default {
     },
     next() {
       this.nextPage()
+    },
+    closeEdit(value) {
+      console.log('emit close', value)
+      this.toogleUpdate = false
+    },
+    handleUpdate(updatedPokemon) {
+      this.updatePokemon(updatedPokemon).then(() => {
+        this.fetchPokemonList(); // Refresh the list after update
+      });
     }
   }
 };

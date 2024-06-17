@@ -112,7 +112,6 @@ app.get('/get/pokemon/:id', (req, res) => {
 app.put('/update/pokemon/:id', (req, res) => {
     const { id } = req.params; // Recup id via parama
     const { name, type, hability } = req.body;
-    console.log('method call with :', name)
     // utilisation de serialize pour mettre a jour les données
     db.serialize(() => {
         const query = `UPDATE pokemon SET name = ?, type = ?, hability = ? WHERE id = ?`

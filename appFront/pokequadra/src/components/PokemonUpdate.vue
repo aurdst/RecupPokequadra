@@ -1,6 +1,5 @@
 <template>
   <div class="pokemon-card" v-if="isOpen">
-    <button @click="close()">Fermer</button>
     <div>
       <h1>UPDATE</h1>
       <img :src="pokemon.picture" alt="superreferencement">
@@ -48,12 +47,10 @@ export default {
   },
   methods: {
   ...mapActions(['updatePokemon']),
-  close() {
-    this.$emit('close');
-  },
   submitUpdatePokemon() {
-    console.log(this.pokemonUpdate)
-    this.updatePokemon(this.pokemon.id, this.pokemonUpdate);
+    this.updatePokemon({id: this.pokemon.id,  updatedPokemon: this.pokemonUpdate});
+    this.$emit('update', { id: this.pokemon.id, ...this.pokemonUpdate });
+    this.$emit('close', false);
   },
   },
 };

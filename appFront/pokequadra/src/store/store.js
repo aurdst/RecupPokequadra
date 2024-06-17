@@ -41,11 +41,11 @@ export default createStore({
         console.error('Error inserting Pokémon:', error);
       }
     },
-    async updatePokemon({ commit }, id) {
+    async updatePokemon({ commit }, { id, updatedPokemon }) {
       try {
-        const response = await axios.put(`http://localhost:5000/update/pokemon/${id}`, updatePokemeon);
+        const response = await axios.put(`http://localhost:5000/update/pokemon/${id}`, updatedPokemon);
         console.log(response)
-        commit('updatePokemon', {id, updatePokemeon});
+        commit('updatePokemon', {id, updatedPokemon});
       } catch (error) {
         console.error('Error updating Pokémon:', error);
       }
