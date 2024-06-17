@@ -76,8 +76,7 @@ export default {
     next() {
       this.nextPage()
     },
-    closeEdit(value) {
-      console.log('emit close', value)
+    closeEdit() {
       this.toogleUpdate = false
     },
     handleUpdate(updatedPokemon) {
